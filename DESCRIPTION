@@ -1,0 +1,10 @@
+Package: 
+Title: 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Shenyu", "He", , "shee0080@student.monash.edu", role = c("aut", "cre"))
+Description:
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.1.0
