@@ -1,10 +1,32 @@
-Package: 
-Title: 
+Package: steamfinder
+Title: Explore Historical Steam Game Data
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person("Shenyu", "He", , "shee0080@student.monash.edu", role = c("aut", "cre"))
-Description:
+Description: Provides historical Steam game data and tools for exploring
+    game prices, genres, and player ratings. Includes an interactive
+    Shiny application for filtering games by budget, genre, and review
+    count, and comparing the games that meet these conditions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 8.1.0
+Depends:
+    R (>= 4.1.0)
+LazyData: true
+Config/roxygen2/version: 8.1.0
+Imports:
+    bslib (>= 0.5.0),
+    dplyr,
+    ggplot2,
+    rlang,
+    shiny,
+    stats,
+    utils
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+URL: https://github.com/ETC5523-2026/etc5523-assignment-4-shee0080,
+    https://etc5523-2026.github.io/etc5523-assignment-4-shee0080/

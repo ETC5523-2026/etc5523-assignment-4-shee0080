@@ -1,0 +1,33 @@
+#' Historical Steam game prices and player reviews
+#'
+#' A prepared data set of 27,075 games. Each row represents one game,
+#' identified by appid. Games can have several genre labels.
+#'
+#' @format A data frame with 27,075 rows and 9 variables:
+#' \describe{
+#'   \item{appid}{Unique Steam application identifier.}
+#'   \item{name}{Game title.}
+#'   \item{release_date}{Game release date, stored as a Date.}
+#'   \item{genres}{Genre labels separated by semicolons.}
+#'   \item{price}{Historical list price in GBP; zero denotes a free game.}
+#'   \item{positive_ratings}{Number of positive reviews in the snapshot.}
+#'   \item{negative_ratings}{Number of negative reviews in the snapshot.}
+#'   \item{total_reviews}{Positive plus negative review counts.}
+#'   \item{positive_percent}{Positive reviews divided by total reviews,
+#'     multiplied by 100.}
+#' }
+#' @details Release dates range from 1997-06-30 to 2019-05-01.
+#'   Review counts and prices are historical, not current Steam listings.
+#'   The positive percentage is a simple derived proportion, not a
+#'   reconstruction of Steam's official review classification.
+#'
+#'   The source data are distributed under CC BY 4.0. Code in this package
+#'   is licensed separately under the MIT licence.
+#' @source Tuvshin Selenge, Steam_games, Zenodo:
+#'   \url{https://doi.org/10.5281/zenodo.7904761}.
+#'   Original price-cleaning methodology:
+#'   \url{https://nik-davis.github.io/posts/2019/steam-data-cleaning/}.
+#' @examples
+#' utils::head(steam_games, 3)
+"steam_games"
+

@@ -1,0 +1,12 @@
+body { font-size: 17px; }
+h2 { color: #14536b; margin-bottom: 0.75rem; }
+.bslib-card { margin-bottom: 1rem; }
+.selection-message {
+  padding: 0.85rem 1rem;
+  margin: 0.5rem 0 1rem;
+  border-left: 4px solid #176B87;
+  background: #eaf4f7;
+  border-radius: 4px;
+}
+.limit-note { color: #53616b; line-height: 1.5; }
+.table-scroll { overflow-x: auto; }

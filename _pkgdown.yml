@@ -1,0 +1,14 @@
+url: https://etc5523-2026.github.io/etc5523-assignment-4-shee0080/
+template:
+  bootstrap: 5
+reference:
+- title: Packaged data
+  contents:
+  - steam_games
+- title: Filter and summarise
+  contents:
+  - filter_games
+  - summarise_games
+- title: Launch the app
+  contents:
+  - run_app
