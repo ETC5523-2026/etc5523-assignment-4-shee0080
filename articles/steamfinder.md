@@ -1,0 +1,129 @@
+# Using steamfinder
+
+## Purpose and data
+
+This package helps Steam players compare games within a historical
+budget and genre selection. The question is: which games meet these
+conditions, and how do their positive review percentages compare?
+
+The prepared `steam_games` data contain 27,075 games and nine variables.
+They come from [Steam_games on
+Zenodo](https://doi.org/10.5281/zenodo.7904761), distributed under CC BY
+4.0. Release dates in this snapshot run from 1997 to May 2019. The
+Zenodo deposit date does not make these current prices.
+
+## Install and launch
+
+Run the following once the completed package has been pushed to GitHub:
+
+``` r
+
+install.packages("remotes")
+remotes::install_github("ETC5523-2026/etc5523-assignment-4-shee0080")
+```
+
+Then load the package and launch the app:
+
+``` r
+
+library(steamfinder)
+run_app()
+```
+
+Stop the app using the Stop button in RStudio, or Escape in the R
+console.
+
+## Filter and summarise games
+
+The same functions used by the app can be called directly.
+
+``` r
+
+library(steamfinder)
+
+action_games <- filter_games(
+  steam_games,
+  genres = "Action",
+  max_price = 20,
+  min_reviews = 100
+)
+
+summarise_games(action_games)
+```
+
+    ##   n_games median_price median_positive_percent total_reviews
+    ## 1    3705         5.99                79.10959      18046819
+
+For this dataset, these settings retain 3,705 games, with a median
+historical price of GBP 5.99 and a median positive review percentage of
+79.1%.
+
+These results describe the matching games, not all Steam games. The
+median price is in historical GBP. The median positive percentage gives
+each game equal weight; it is not the positive percentage of a pool of
+reviews. A game’s percentage is its positive reviews divided by its
+total reviews, multiplied by 100.
+
+Several genres match using “any”: selecting Action and Adventure retains
+games in either genre, while counting each game once.
+
+``` r
+
+two_genres <- filter_games(
+  steam_games,
+  genres = c("Action", "Adventure"),
+  max_price = 20,
+  min_reviews = 100
+)
+summarise_games(two_genres)
+```
+
+    ##   n_games median_price median_positive_percent total_reviews
+    ## 1    5404         5.99                      80      20420936
+
+## Use and interpret the app
+
+1.  Choose one or several genres.
+2.  Set a maximum historical price in GBP.
+3.  Adjust the minimum number of positive plus negative reviews.
+4.  Read the matching count and medians, then inspect the scatterplot
+    and table.
+
+Each dot represents one game. Vertical position shows the positive
+review percentage; horizontal position shows price. The table shows up
+to 20 matching games, ordered by positive percentage and then review
+count. The summary includes all matches, not just those 20 rows.
+
+Try changing the maximum price from 20 to zero. This restricts results
+to free games in the historical snapshot. Compare both the number of
+matching games and their median percentage, rather than assuming a
+higher percentage means a better purchase.
+
+## Empty selections and limitations
+
+Clear all genre selections to see the request to select at least one
+genre. Alternatively, set the minimum review count to 1,000,000,000: no
+games match, and the app explains how to broaden the selection.
+
+``` r
+
+no_games <- filter_games(steam_games, "Action", 20, 1000000000)
+summarise_games(no_games)
+```
+
+    ##   n_games median_price median_positive_percent total_reviews
+    ## 1       0           NA                      NA             0
+
+An empty selection has zero games and undefined medians, rather than
+misleading zero prices or zero percentages.
+
+These are historical prices and reviews, not live availability or buying
+advice. Reviewers are self-selected, small review counts can produce
+unstable percentages, and a larger minimum count does not remove all
+bias. A relationship between price and percentage does not establish
+causation.
+
+Price units follow the [original cleaning
+methodology](https://nik-davis.github.io/posts/2019/steam-data-cleaning/):
+GBP list prices before discounts. The percentage is calculated from the
+provided counts and is not Steam’s official review classification.
