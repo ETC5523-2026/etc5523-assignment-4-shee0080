@@ -1,12 +1,72 @@
-body { font-size: 17px; }
-h2 { color: #14536b; margin-bottom: 0.75rem; }
-.bslib-card { margin-bottom: 1rem; }
-.selection-message {
-  padding: 0.85rem 1rem;
-  margin: 0.5rem 0 1rem;
-  border-left: 4px solid #176B87;
-  background: #eaf4f7;
-  border-radius: 4px;
+body {
+  color: #203b48;
+  background: #f4f7fa;
+  font-size: 17px;
+  line-height: 1.6;
 }
-.limit-note { color: #53616b; line-height: 1.5; }
+.bslib-sidebar-layout > .main { padding: 1.5rem; }
+.filter-sidebar { background: #fff; }
+.filter-sidebar .sidebar-title { font-weight: 700; }
+.filter-sidebar .control-label {
+  color: #14536b;
+  font-weight: 650;
+  margin-top: 0.5rem;
+}
+.filter-sidebar .help-block {
+  color: #526775;
+  font-size: 0.88rem;
+}
+.starting-point {
+  background: #edf5fa;
+  border-left: 3px solid #176b87;
+  border-radius: 0.35rem;
+  padding: 0.8rem;
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+}
+.starting-point p { margin: 0.35rem 0 0; }
+.steam-heading { margin-bottom: 1.2rem; }
+.steam-heading h2 {
+  color: #14536b;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.7rem;
+}
+.steam-heading p { max-width: 78ch; margin-bottom: 0.5rem; }
+.scope-note, .source-note { color: #526775; font-size: 0.88rem; }
+.metric-card {
+  background: #fff;
+  border: 1px solid #dce5eb;
+  border-radius: 0.6rem;
+}
+.metric-card .value-box-title { font-size: 0.9rem; font-weight: 600; }
+.metric-card .value-box-value {
+  color: #176b87;
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.metric-card p { color: #526775; font-size: 0.82rem; margin: 0.3rem 0 0; }
+.selection-message {
+  background: #eaf4f8;
+  border-left: 4px solid #176b87;
+  border-radius: 0.4rem;
+  padding: 0.9rem 1rem;
+  margin: 1.1rem 0;
+}
+.selection-message strong { display: block; margin-bottom: 0.2rem; }
+.bslib-card { border-color: #dce5eb; margin-bottom: 1.2rem; }
+.bslib-card h3 { color: #14536b; font-size: 1.2rem; font-weight: 650; }
+.bslib-card p { max-width: 85ch; }
+.nav-tabs .nav-link { min-height: 44px; font-weight: 600; }
 .table-scroll { overflow-x: auto; }
+.table-scroll table { font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.table-scroll th { white-space: nowrap; background: #edf5fa; }
+.reading-card .card-header { font-weight: 650; background: #edf5fa; }
+.source-note { margin-bottom: 1rem; }
+@media (max-width: 767px) {
+  .bslib-sidebar-layout > .main { padding: 1rem; }
+  .steam-stats > * { grid-column: 1 / -1; }
+  .metric-card .value-box-value { font-size: 1.7rem; }
+}
