@@ -31,7 +31,7 @@ listings.
 
 ## Installation
 
-Once the completed source has been pushed to GitHub:
+Install the GitHub version:
 
 ``` r
 
@@ -47,13 +47,27 @@ library(steamfinder)
 run_app()
 ```
 
-Choose genres, a maximum historical price in GBP and a minimum review
-count. The summary, scatterplot and table use the same selected games.
+Follow the three numbered controls: genres, maximum historical price in
+GBP and minimum review count. Type the budget directly; use 0 to select
+free games only. Start with Action, GBP 20 and at least 100 reviews.
+
+Three cards show matching games, median historical price and the median
+positive review share. The selection message states the filters in use.
 Multiple genres match using “any”, with each game counted once.
 
-The table shows up to 20 games; the count and medians describe all
-matches. An empty genre selection or filters with no matching games
-produce guidance rather than misleading zero medians.
+Switch between Price & reviews for the scatterplot and Matching games
+for the table. Both tabs use the same selection. The table shows up to
+20 games; the cards describe all matches.
+
+Clearing the genres or entering an invalid number shows dashes on the
+cards and a specific instruction in the selection message. Valid filters
+with no matches show zero games and undefined medians labelled “No
+matches”.
+
+With Action and at least 100 reviews, reducing the budget from GBP 20 to
+zero reduces the selection from 3,705 to 491 games. These selections
+overlap: the GBP 20 group includes free games. The comparison does not
+show that paying more causes better reviews.
 
 ## Use the functions
 
@@ -63,8 +77,7 @@ games <- filter_games(
   steam_games,
   genres = "Action",
   max_price = 20,
-  min_reviews = 100
-)
+  min_reviews = 100)
 summarise_games(games)
 ```
 

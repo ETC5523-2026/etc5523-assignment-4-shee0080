@@ -61,34 +61,86 @@
 <div class="section level2">
 <h2 id="purpose-and-data">Purpose and data<a class="anchor" aria-label="anchor" href="#purpose-and-data"></a>
 </h2>
-<p>This package helps Steam players compare games within a historical
-budget and genre selection. The question is: which games meet these
-conditions, and how do their positive review percentages compare?</p>
-<p>The prepared <code>steam_games</code> data contain 27,075 games and
-nine variables. They come from <a href="https://doi.org/10.5281/zenodo.7904761" class="external-link">Steam_games on Zenodo</a>,
-distributed under CC BY 4.0. Release dates in this snapshot run from
-1997 to May 2019. The Zenodo deposit date does not make these current
-prices.</p>
+<p>Steam Game Finder helps Steam players explore a historical snapshot:
+which games meet a chosen budget, genre and review-count threshold, and
+how do their positive review percentages compare?</p>
+<p>The package contains 27,075 games and nine variables from <a href="https://doi.org/10.5281/zenodo.7904761" class="external-link">Steam_games on Zenodo</a>,
+distributed under CC BY 4.0. Release dates run from 1997 to May 2019.
+Prices are historical GBP, not current Steam prices.</p>
 </div>
 <div class="section level2">
 <h2 id="install-and-launch">Install and launch<a class="anchor" aria-label="anchor" href="#install-and-launch"></a>
 </h2>
-<p>Run the following once the completed package has been pushed to
-GitHub:</p>
+<p>Install the GitHub version:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ETC5523-2026/etc5523-assignment-4-shee0080"</span><span class="op">)</span></span></code></pre></div>
-<p>Then load the package and launch the app:</p>
+<p>Load the package and start the app:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ETC5523-2026/etc5523-assignment-4-shee0080" class="external-link">steamfinder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Stop the app using the Stop button in RStudio, or Escape in the R
-console.</p>
+<p>In RStudio, stop the app using Stop in the Console or press
+Escape.</p>
 </div>
 <div class="section level2">
-<h2 id="filter-and-summarise-games">Filter and summarise games<a class="anchor" aria-label="anchor" href="#filter-and-summarise-games"></a>
+<h2 id="choose-your-filters">Choose your filters<a class="anchor" aria-label="anchor" href="#choose-your-filters"></a>
 </h2>
-<p>The same functions used by the app can be called directly.</p>
+<p>Follow the three numbered controls in the sidebar:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Genres:</strong> select one or more. A game matching any
+selected genre is included, and each game is counted once.</li>
+<li>
+<strong>Maximum price (GBP):</strong> type a budget limit. Enter 0
+to keep free games only.</li>
+<li>
+<strong>Minimum reviews:</strong> type the minimum number of
+positive plus negative reviews. This is a count threshold, not a rating
+threshold.</li>
+</ol>
+<p>Start with Action, a maximum price of 20 and at least 100 reviews.
+The cards, written selection message, plot and table update
+automatically.</p>
+</div>
+<div class="section level2">
+<h2 id="read-the-three-cards">Read the three cards<a class="anchor" aria-label="anchor" href="#read-the-three-cards"></a>
+</h2>
+<ul>
+<li>
+<strong>Matching games</strong> counts every game that meets the
+filters.</li>
+<li>
+<strong>Median price (GBP)</strong> is the middle historical price
+among those games.</li>
+<li>
+<strong>Median positive share (%)</strong> is the median of the
+individual games’ positive review percentages. Each game has equal
+weight.</li>
+</ul>
+<p>Positive share means positive reviews divided by total reviews,
+multiplied by 100. It is not Steam’s official review classification, and
+the median does not pool all reviews into one percentage.</p>
+<p>The written selection message states the current filters and how many
+games they retain.</p>
+</div>
+<div class="section level2">
+<h2 id="switch-between-the-results">Switch between the results<a class="anchor" aria-label="anchor" href="#switch-between-the-results"></a>
+</h2>
+<p><strong>Price &amp; reviews</strong> shows every matching game as a
+dot. Higher dots have a larger positive review percentage; dots further
+right have a higher historical price.</p>
+<p><strong>Matching games</strong> lists up to 20 games, ordered by
+positive percentage and then review count. The summary cards include
+every matching game, not only the displayed rows. Switching tabs keeps
+the filters unchanged.</p>
+<p>The table is a way to inspect titles and review counts, not a current
+buying recommendation. Read the explanation below the results as
+well.</p>
+</div>
+<div class="section level2">
+<h2 id="try-a-budget-comparison">Try a budget comparison<a class="anchor" aria-label="anchor" href="#try-a-budget-comparison"></a>
+</h2>
+<p>Use the same functions that supply the app:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ETC5523-2026/etc5523-assignment-4-shee0080" class="external-link">steamfinder</a></span><span class="op">)</span></span>
 <span></span>
@@ -98,21 +150,68 @@ console.</p>
 <span>  max_price <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  min_reviews <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
+<span><span class="va">free_games</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_games.html">filter_games</a></span><span class="op">(</span></span>
+<span>  <span class="va">steam_games</span>,</span>
+<span>  genres <span class="op">=</span> <span class="st">"Action"</span>,</span>
+<span>  max_price <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  min_reviews <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/summarise_games.html">summarise_games</a></span><span class="op">(</span><span class="va">action_games</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   n_games median_price median_positive_percent total_reviews</span></span>
-<span><span class="co">## 1    3705         5.99                79.10959      18046819</span></span></code></pre>
-<p>For this dataset, these settings retain 3,705 games, with a median
-historical price of GBP 5.99 and a median positive review percentage of
-79.1%.</p>
-<p>These results describe the matching games, not all Steam games. The
-median price is in historical GBP. The median positive percentage gives
-each game equal weight; it is not the positive percentage of a pool of
-reviews. A game’s percentage is its positive reviews divided by its
-total reviews, multiplied by 100.</p>
-<p>Several genres match using “any”: selecting Action and Adventure
-retains games in either genre, while counting each game once.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span><span class="va">budget_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_games.html">summarise_games</a></span><span class="op">(</span><span class="va">action_games</span><span class="op">)</span></span>
+<span><span class="va">free_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_games.html">summarise_games</a></span><span class="op">(</span><span class="va">free_games</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  selection <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Up to GBP 20"</span>, <span class="st">"Free only"</span><span class="op">)</span>,</span>
+<span>  n_games <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">budget_summary</span><span class="op">$</span><span class="va">n_games</span>, <span class="va">free_summary</span><span class="op">$</span><span class="va">n_games</span><span class="op">)</span>,</span>
+<span>  median_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">budget_summary</span><span class="op">$</span><span class="va">median_price</span>, <span class="va">free_summary</span><span class="op">$</span><span class="va">median_price</span><span class="op">)</span>,</span>
+<span>  median_positive <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="va">budget_summary</span><span class="op">$</span><span class="va">median_positive_percent</span>,</span>
+<span>    <span class="va">free_summary</span><span class="op">$</span><span class="va">median_positive_percent</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
+<span>  <span class="va">comparison</span>,</span>
+<span>  col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Selection"</span>, <span class="st">"Games"</span>, <span class="st">"Median price (GBP)"</span>, <span class="st">"Median positive (%)"</span><span class="op">)</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  row.names <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Selection</th>
+<th align="right">Games</th>
+<th align="right">Median price (GBP)</th>
+<th align="right">Median positive (%)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Up to GBP 20</td>
+<td align="right">3705</td>
+<td align="right">5.99</td>
+<td align="right">79.1</td>
+</tr>
+<tr class="even">
+<td align="left">Free only</td>
+<td align="right">491</td>
+<td align="right">0.00</td>
+<td align="right">72.8</td>
+</tr>
+</tbody>
+</table>
+<p>Reducing the budget from GBP 20 to zero changes the number of
+matching games from 3,705 to 491. The median positive percentage changes
+from 79.1% to 72.8%.</p>
+<p>These are descriptions of two selections in this snapshot. The GBP 20
+selection includes free games, so this is not a comparison between two
+separate paid and free groups. It cannot establish that paying more
+causes better reviews.</p>
+</div>
+<div class="section level2">
+<h2 id="select-several-genres">Select several genres<a class="anchor" aria-label="anchor" href="#select-several-genres"></a>
+</h2>
+<p>The genre condition uses “any”. Choosing Action and Adventure
+includes games in either genre, while counting a game in both genres
+only once.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">two_genres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_games.html">filter_games</a></span><span class="op">(</span></span>
 <span>  <span class="va">steam_games</span>,</span>
 <span>  genres <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Action"</span>, <span class="st">"Adventure"</span><span class="op">)</span>,</span>
@@ -124,46 +223,39 @@ retains games in either genre, while counting each game once.</p>
 <span><span class="co">## 1    5404         5.99                      80      20420936</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="use-and-interpret-the-app">Use and interpret the app<a class="anchor" aria-label="anchor" href="#use-and-interpret-the-app"></a>
+<h2 id="check-incomplete-inputs-and-empty-results">Check incomplete inputs and empty results<a class="anchor" aria-label="anchor" href="#check-incomplete-inputs-and-empty-results"></a>
 </h2>
-<ol style="list-style-type: decimal">
-<li>Choose one or several genres.</li>
-<li>Set a maximum historical price in GBP.</li>
-<li>Adjust the minimum number of positive plus negative reviews.</li>
-<li>Read the matching count and medians, then inspect the scatterplot
-and table.</li>
-</ol>
-<p>Each dot represents one game. Vertical position shows the positive
-review percentage; horizontal position shows price. The table shows up
-to 20 matching games, ordered by positive percentage and then review
-count. The summary includes all matches, not just those 20 rows.</p>
-<p>Try changing the maximum price from 20 to zero. This restricts
-results to free games in the historical snapshot. Compare both the
-number of matching games and their median percentage, rather than
-assuming a higher percentage means a better purchase.</p>
-</div>
-<div class="section level2">
-<h2 id="empty-selections-and-limitations">Empty selections and limitations<a class="anchor" aria-label="anchor" href="#empty-selections-and-limitations"></a>
-</h2>
-<p>Clear all genre selections to see the request to select at least one
-genre. Alternatively, set the minimum review count to 1,000,000,000: no
-games match, and the app explains how to broaden the selection.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Clear every genre in the app. The three cards show a dash, the result
+area clears, and the selection message asks you to choose a genre. A
+blank or negative numeric input similarly produces a specific message
+rather than retaining old results.</p>
+<p>For a valid selection with no matches, choose Action and set the
+minimum reviews to 1,000,000,000. The matching count becomes zero;
+medians show “No matches”, and the app suggests broadening the
+filters.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">no_games</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_games.html">filter_games</a></span><span class="op">(</span><span class="va">steam_games</span>, <span class="st">"Action"</span>, <span class="fl">20</span>, <span class="fl">1000000000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/summarise_games.html">summarise_games</a></span><span class="op">(</span><span class="va">no_games</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   n_games median_price median_positive_percent total_reviews</span></span>
 <span><span class="co">## 1       0           NA                      NA             0</span></span></code></pre>
-<p>An empty selection has zero games and undefined medians, rather than
-misleading zero prices or zero percentages.</p>
-<p>These are historical prices and reviews, not live availability or
-buying advice. Reviewers are self-selected, small review counts can
-produce unstable percentages, and a larger minimum count does not remove
-all bias. A relationship between price and percentage does not establish
-causation.</p>
+<p>The function returns zero games and undefined medians. An undefined
+median should not be interpreted as a zero price or zero positive
+share.</p>
+</div>
+<div class="section level2">
+<h2 id="limitations-and-sources">Limitations and sources<a class="anchor" aria-label="anchor" href="#limitations-and-sources"></a>
+</h2>
+<p>These historical observations do not describe current prices,
+availability or reviews. The 2023 Zenodo deposit date is not the date of
+the prices.</p>
+<p>Reviewers are self-selected, and small review counts can produce
+unstable percentages. Increasing the minimum count changes which games
+are included without eliminating selection bias. The chart cannot
+establish causation.</p>
 <p>Price units follow the <a href="https://nik-davis.github.io/posts/2019/steam-data-cleaning/" class="external-link">original
-cleaning methodology</a>: GBP list prices before discounts. The
-percentage is calculated from the provided counts and is not Steam’s
-official review classification.</p>
+cleaning methodology</a>: GBP list prices before discounts. Source data
+retain the CC BY 4.0 licence; package code is licensed separately under
+MIT.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

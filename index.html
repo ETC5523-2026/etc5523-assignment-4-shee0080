@@ -67,7 +67,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Once the completed source has been pushed to GitHub:</p>
+<p>Install the GitHub version:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ETC5523-2026/etc5523-assignment-4-shee0080"</span><span class="op">)</span></span></code></pre></div>
@@ -78,8 +78,11 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ETC5523-2026/etc5523-assignment-4-shee0080" class="external-link">steamfinder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Choose genres, a maximum historical price in GBP and a minimum review count. The summary, scatterplot and table use the same selected games. Multiple genres match using “any”, with each game counted once.</p>
-<p>The table shows up to 20 games; the count and medians describe all matches. An empty genre selection or filters with no matching games produce guidance rather than misleading zero medians.</p>
+<p>Follow the three numbered controls: genres, maximum historical price in GBP and minimum review count. Type the budget directly; use 0 to select free games only. Start with Action, GBP 20 and at least 100 reviews.</p>
+<p>Three cards show matching games, median historical price and the median positive review share. The selection message states the filters in use. Multiple genres match using “any”, with each game counted once.</p>
+<p>Switch between Price &amp; reviews for the scatterplot and Matching games for the table. Both tabs use the same selection. The table shows up to 20 games; the cards describe all matches.</p>
+<p>Clearing the genres or entering an invalid number shows dashes on the cards and a specific instruction in the selection message. Valid filters with no matches show zero games and undefined medians labelled “No matches”.</p>
+<p>With Action and at least 100 reviews, reducing the budget from GBP 20 to zero reduces the selection from 3,705 to 491 games. These selections overlap: the GBP 20 group includes free games. The comparison does not show that paying more causes better reviews.</p>
 </div>
 <div class="section level2">
 <h2 id="use-the-functions">Use the functions<a class="anchor" aria-label="anchor" href="#use-the-functions"></a>
@@ -89,8 +92,7 @@
 <span>  <span class="va">steam_games</span>,</span>
 <span>  genres <span class="op">=</span> <span class="st">"Action"</span>,</span>
 <span>  max_price <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  min_reviews <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span>
+<span>  min_reviews <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/summarise_games.html">summarise_games</a></span><span class="op">(</span><span class="va">games</span><span class="op">)</span></span></code></pre></div>
 <p>These settings select 3,705 games, with a median historical price of GBP 5.99 and a median positive review percentage of about 79.1%. The median gives every game equal weight; it does not pool all reviews. This calculated percentage is not Steam’s official review classification.</p>
 </div>

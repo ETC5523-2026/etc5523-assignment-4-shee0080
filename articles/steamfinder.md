@@ -2,19 +2,18 @@
 
 ## Purpose and data
 
-This package helps Steam players compare games within a historical
-budget and genre selection. The question is: which games meet these
-conditions, and how do their positive review percentages compare?
+Steam Game Finder helps Steam players explore a historical snapshot:
+which games meet a chosen budget, genre and review-count threshold, and
+how do their positive review percentages compare?
 
-The prepared `steam_games` data contain 27,075 games and nine variables.
-They come from [Steam_games on
-Zenodo](https://doi.org/10.5281/zenodo.7904761), distributed under CC BY
-4.0. Release dates in this snapshot run from 1997 to May 2019. The
-Zenodo deposit date does not make these current prices.
+The package contains 27,075 games and nine variables from [Steam_games
+on Zenodo](https://doi.org/10.5281/zenodo.7904761), distributed under CC
+BY 4.0. Release dates run from 1997 to May 2019. Prices are historical
+GBP, not current Steam prices.
 
 ## Install and launch
 
-Run the following once the completed package has been pushed to GitHub:
+Install the GitHub version:
 
 ``` r
 
@@ -22,7 +21,7 @@ install.packages("remotes")
 remotes::install_github("ETC5523-2026/etc5523-assignment-4-shee0080")
 ```
 
-Then load the package and launch the app:
+Load the package and start the app:
 
 ``` r
 
@@ -30,12 +29,53 @@ library(steamfinder)
 run_app()
 ```
 
-Stop the app using the Stop button in RStudio, or Escape in the R
-console.
+In RStudio, stop the app using Stop in the Console or press Escape.
 
-## Filter and summarise games
+## Choose your filters
 
-The same functions used by the app can be called directly.
+Follow the three numbered controls in the sidebar:
+
+1.  **Genres:** select one or more. A game matching any selected genre
+    is included, and each game is counted once.
+2.  **Maximum price (GBP):** type a budget limit. Enter 0 to keep free
+    games only.
+3.  **Minimum reviews:** type the minimum number of positive plus
+    negative reviews. This is a count threshold, not a rating threshold.
+
+Start with Action, a maximum price of 20 and at least 100 reviews. The
+cards, written selection message, plot and table update automatically.
+
+## Read the three cards
+
+- **Matching games** counts every game that meets the filters.
+- **Median price (GBP)** is the middle historical price among those
+  games.
+- **Median positive share (%)** is the median of the individual games’
+  positive review percentages. Each game has equal weight.
+
+Positive share means positive reviews divided by total reviews,
+multiplied by 100. It is not Steam’s official review classification, and
+the median does not pool all reviews into one percentage.
+
+The written selection message states the current filters and how many
+games they retain.
+
+## Switch between the results
+
+**Price & reviews** shows every matching game as a dot. Higher dots have
+a larger positive review percentage; dots further right have a higher
+historical price.
+
+**Matching games** lists up to 20 games, ordered by positive percentage
+and then review count. The summary cards include every matching game,
+not only the displayed rows. Switching tabs keeps the filters unchanged.
+
+The table is a way to inspect titles and review counts, not a current
+buying recommendation. Read the explanation below the results as well.
+
+## Try a budget comparison
+
+Use the same functions that supply the app:
 
 ``` r
 
@@ -47,25 +87,51 @@ action_games <- filter_games(
   max_price = 20,
   min_reviews = 100
 )
+free_games <- filter_games(
+  steam_games,
+  genres = "Action",
+  max_price = 0,
+  min_reviews = 100
+)
 
-summarise_games(action_games)
+budget_summary <- summarise_games(action_games)
+free_summary <- summarise_games(free_games)
+
+comparison <- data.frame(
+  selection = c("Up to GBP 20", "Free only"),
+  n_games = c(budget_summary$n_games, free_summary$n_games),
+  median_price = c(budget_summary$median_price, free_summary$median_price),
+  median_positive = c(
+    budget_summary$median_positive_percent,
+    free_summary$median_positive_percent
+  )
+)
+knitr::kable(
+  comparison,
+  col.names = c("Selection", "Games", "Median price (GBP)", "Median positive (%)"),
+  digits = c(0, 0, 2, 1),
+  row.names = FALSE
+)
 ```
 
-    ##   n_games median_price median_positive_percent total_reviews
-    ## 1    3705         5.99                79.10959      18046819
+| Selection    | Games | Median price (GBP) | Median positive (%) |
+|:-------------|------:|-------------------:|--------------------:|
+| Up to GBP 20 |  3705 |               5.99 |                79.1 |
+| Free only    |   491 |               0.00 |                72.8 |
 
-For this dataset, these settings retain 3,705 games, with a median
-historical price of GBP 5.99 and a median positive review percentage of
-79.1%.
+Reducing the budget from GBP 20 to zero changes the number of matching
+games from 3,705 to 491. The median positive percentage changes from
+79.1% to 72.8%.
 
-These results describe the matching games, not all Steam games. The
-median price is in historical GBP. The median positive percentage gives
-each game equal weight; it is not the positive percentage of a pool of
-reviews. A game’s percentage is its positive reviews divided by its
-total reviews, multiplied by 100.
+These are descriptions of two selections in this snapshot. The GBP 20
+selection includes free games, so this is not a comparison between two
+separate paid and free groups. It cannot establish that paying more
+causes better reviews.
 
-Several genres match using “any”: selecting Action and Adventure retains
-games in either genre, while counting each game once.
+## Select several genres
+
+The genre condition uses “any”. Choosing Action and Adventure includes
+games in either genre, while counting a game in both genres only once.
 
 ``` r
 
@@ -81,29 +147,16 @@ summarise_games(two_genres)
     ##   n_games median_price median_positive_percent total_reviews
     ## 1    5404         5.99                      80      20420936
 
-## Use and interpret the app
+## Check incomplete inputs and empty results
 
-1.  Choose one or several genres.
-2.  Set a maximum historical price in GBP.
-3.  Adjust the minimum number of positive plus negative reviews.
-4.  Read the matching count and medians, then inspect the scatterplot
-    and table.
+Clear every genre in the app. The three cards show a dash, the result
+area clears, and the selection message asks you to choose a genre. A
+blank or negative numeric input similarly produces a specific message
+rather than retaining old results.
 
-Each dot represents one game. Vertical position shows the positive
-review percentage; horizontal position shows price. The table shows up
-to 20 matching games, ordered by positive percentage and then review
-count. The summary includes all matches, not just those 20 rows.
-
-Try changing the maximum price from 20 to zero. This restricts results
-to free games in the historical snapshot. Compare both the number of
-matching games and their median percentage, rather than assuming a
-higher percentage means a better purchase.
-
-## Empty selections and limitations
-
-Clear all genre selections to see the request to select at least one
-genre. Alternatively, set the minimum review count to 1,000,000,000: no
-games match, and the app explains how to broaden the selection.
+For a valid selection with no matches, choose Action and set the minimum
+reviews to 1,000,000,000. The matching count becomes zero; medians show
+“No matches”, and the app suggests broadening the filters.
 
 ``` r
 
@@ -114,16 +167,21 @@ summarise_games(no_games)
     ##   n_games median_price median_positive_percent total_reviews
     ## 1       0           NA                      NA             0
 
-An empty selection has zero games and undefined medians, rather than
-misleading zero prices or zero percentages.
+The function returns zero games and undefined medians. An undefined
+median should not be interpreted as a zero price or zero positive share.
 
-These are historical prices and reviews, not live availability or buying
-advice. Reviewers are self-selected, small review counts can produce
-unstable percentages, and a larger minimum count does not remove all
-bias. A relationship between price and percentage does not establish
-causation.
+## Limitations and sources
+
+These historical observations do not describe current prices,
+availability or reviews. The 2023 Zenodo deposit date is not the date of
+the prices.
+
+Reviewers are self-selected, and small review counts can produce
+unstable percentages. Increasing the minimum count changes which games
+are included without eliminating selection bias. The chart cannot
+establish causation.
 
 Price units follow the [original cleaning
 methodology](https://nik-davis.github.io/posts/2019/steam-data-cleaning/):
-GBP list prices before discounts. The percentage is calculated from the
-provided counts and is not Steam’s official review classification.
+GBP list prices before discounts. Source data retain the CC BY 4.0
+licence; package code is licensed separately under MIT.
