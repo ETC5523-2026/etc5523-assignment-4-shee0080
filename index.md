@@ -114,3 +114,9 @@ higher rating. These results support exploration of the snapshot, rather
 than current buying recommendations.
 
 ## AI Announcement
+
+I used Chatgpt as a supporting tool to understand the R package
+structure, R/Shiny code and reactive framework, and to assist with
+implementation, debugging, app styling. I reviewed the AI-generated
+suggestions and tested the code. And I take full responsibility for all
+code, results and documentation submitted for the assignment 4.
